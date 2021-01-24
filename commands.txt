@@ -1,0 +1,288 @@
+npm init -y
+npm install typescript ts-node-dev express @types/express
+
+# install typescript globally if not done yet
+    npm install -g typescript ts-node
+
+# init typescript config
+  (if not working / npt install globally, use: npx tsc --init )
+  
+    tsc --init 
+
+# Install ingress-nginx for minikube
+# https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
+
+  minikube addons enable ingress
+
+  # In minikube the ingress addon is installed in the namespace 'kube-system' instead of 'ingress-nginx'
+
+========================================================================
+error when running skaffold
+- Error from server (InternalError): error when creating "STDIN": Internal error occurred: failed calling webhook 
+"validate.nginx.ingress.kubernetes.io": Post https://ingress-nginx-controller-admission.ingress-nginx.svc:443/networking/v1beta1/ingresses?timeout=10s: dial tcp 10.109.83.141:443: connect: connection refused
+========================================================================
+
+# Remove the Validating Webhook entirely:
+# https://github.com/kubernetes/ingress-nginx/issues/5985
+  
+  kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+========================================================================
+
+skaffold dev
+
+
+========================================================================
+TROUBLESHOOT
+========================================================================
+
+server not restart after changing the index.ts file, do the following:
+Open the package.json file in the ‘auth’ directory
+Find the ‘start’ script
+Update the start script to the following:
+
+ts-node-dev --poll src/index.ts
+
+========================================================================
+
+# Unskippable HTTPS warning in Chrome
+
+  type:   thisisunsafe
+
+
+# Install express-validator
+  
+  npm install express-validator
+  
+
+# Install mongoose
+  
+  npm install mongoose
+  npm install @types/mongoose
+
+
+# Install cookie-session
+
+  npm install cookie-session @types/cookie-session
+
+# Install jsonwebtoken
+
+  npm install jsonwebtoken @types/jsonwebtoken
+
+# Create a Secret
+
+  kubectl create secret generic <secret name> --from-literal=<key=value>
+  kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
+
+# Get secrets
+
+  kubectl get secrets
+
+# Show pod info
+
+  kubectl describe pod <pod name>
+  kubectl describe pod auth-depl-68447c4dbd-9kpzv
+
+# Install test tools
+
+  npm install --save-dev @types/jest @types/supertest jest ts-jest supertest mongodb-memory-server
+
+# Run test
+
+  npm run test
+
+===============================================================================================================
+Note: When restarting minikube vm
+===============================================================================================================
+1.  # Install ingress-nginx for minikube
+    # https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
+
+        minikube addons enable ingress
+
+2.  # Create a Secret
+
+        kubectl create secret generic <secret name> --from-literal=<key=value>
+        kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
+
+===============================================================================================================
+
+# NextJs client prep
+
+  npm install react react-dom next
+
+
+# Install bootstrap
+
+  npm install bootstrap
+
+
+# Install axios
+
+  npm install axios
+
+
+# Get kubernetes's namespaces
+  
+  kubectl get namespace 
+
+
+# Get kubernetes pods with namespace
+
+  kubectl get pods --all-namespaces
+
+
+# Get kubernetes service inside namespace
+
+  kubectl get services -n <namespace>
+  kubectl get services -n kube-system 
+
+
+# Get kubernetes pods inside namespace
+
+  kubectl get pods -n <namespace>
+  kubectl get pods -n kube-system
+
+
+# Expose the Deployment
+
+  kubectl expose deployment nginx-ingress-controller --target-port=80 --type=NodePort -n kube-system
+
+
+==========================
+Common library npm
+==========================
+# Login to npm
+
+  npm login
+
+
+# Publish to NPM public
+
+  npm publish --access public
+
+# Generate TS config file
+
+  tsc --init
+
+# Install TS & tool as dev
+
+  npm install typescript del-cli --save-dev
+
+# Update npm version
+
+  npm version patch
+
+# Install express etc
+
+  npm install express express-validator cookie-session jsonwebtoken @types/cookie-session @types/express @types/jsonwebtoken
+
+
+# Update npm package
+
+  npm update <package-name>
+  npm update @uratickets/common
+
+# Run shell inside kubernetes pod
+
+  kubectl exec -it <pod-name> sh
+  kubectl exec -it auth-depl-757894d899-6kpj2 sh
+
+--------------------------------
+# Install NATS streaming
+
+  npm install node-nats-streaming ts-node-dev typescript @types/node
+
+# ::: HOW TO RUN NATS streaming with portforward :::
+# Get nats deployment name using 
+  
+  kubectl get pods
+    -> look for nats-depl-xxxxx..
+
+# Set portforward for nats (run this on seperate cmd)
+
+  kubectl port-forward <pod's name> local's-port:pod's-port
+  kubectl port-forward nats-depl-64c86bb898-vpwtm 4222:4222
+
+# On nats-test path (run on hyper with multiple screen)
+
+  npm run publish
+    and
+  npm run listen
+
+
+# Monitor
+  # Port forward monitoring port on 8222
+
+    kubectl port-forward nats-depl-64c86bb898-vpwtm 8222:8222
+
+  # Open on browser
+    
+    http://localhost:8222/streaming
+
+    http://localhost:8222/streaming/channelsz?subs=1
+
+
+==============================================
+DOCKER remote server
+==============================================
+-run ubuntu server A
+  
+  $env:DOCKER_HOST="192.168.1.220:2375"
+
+-then:
+
+docker images
+docker ps
+==============================================
+
+# Orders service
+# Build docker
+
+  docker build -t urayoko/orders .
+
+
+# Reload VS Code window
+  - Ctrl + Shift + p
+  - reload window
+
+
+==================================
+# mongoose-update-if-current
+
+  npm install mongoose-update-if-current
+
+
+============JEST==================
+# run only specific test file
+
+  1. press w
+  2. press p
+  3. write -> filename.test , ex: ticket.test
+
+
+
+============Expiration==============
+# Install bull for timer
+
+  npm install bull @types/bull
+
+# build and push docker image
+
+  docker build -t urayoko/expiration .
+  docker push urayoko/expiration
+
+
+============Payment=================
+# Install Stripe
+
+  npm install stripe
+
+# create stripe secret on kubernetes
+
+  kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=sk_test_51ICTuxELsuNnbH0asD0DaJItTP7ZHQunPRlYbNawAx7CrqhoMJGpu2qVAq5BScsrzWVnVY9rQXA25jxtBBBG6rho00JBzcDP9t
+
+  kubectl get secrets 
+
+# Install react-stripe-checkout
+
+  npm install react-stripe-checkout
