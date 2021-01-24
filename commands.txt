@@ -286,3 +286,13 @@ docker ps
 # Install react-stripe-checkout
 
   npm install react-stripe-checkout
+
+
+  ======CI/CD=====================
+
+  git status
+  git add . 
+  git commit -m "message"
+  git push origin dev
+
+  git checkout master
