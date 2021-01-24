@@ -294,3 +294,5 @@ docker ps
   git add . 
   git commit -m "message"
   git push origin dev
+
+  git checkout master
