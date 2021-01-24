@@ -297,3 +297,37 @@ docker ps
 
   git checkout master
   git pull origin master
+
+
+  ### Digital Ocean ###
+  # Init
+
+    doctl auth init
+
+
+  # Get connection info for our new cluster
+
+    doctl kubernetes cluster kubeconfig save <cluster-name>
+    doctl kubernetes cluster kubeconfig save ticketing
+
+
+  # List all context 
+  
+    kubectl config view
+
+
+  # Use a different context
+
+    kubectl config use-context <context-name>
+
+  # Switch back to local context
+
+    - get local context name using: 
+      
+      kubectl config view
+
+    - find 'contexts:'
+    - get local context name ( docker-desktop / docker-for-desktop / minikube)
+    - Switch:
+
+      kubectl config use-context minikube
