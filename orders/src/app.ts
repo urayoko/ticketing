@@ -14,7 +14,8 @@ app.use(json())
 app.use(
     cookieSession({
       signed: false, 
-      secure: process.env.NODE_ENV !== 'test'  
+      // secure: process.env.NODE_ENV !== 'test'  
+      secure: false // still not using HTTPS atm
     })
 );
 app.use(currentUser); // make sure after cookieSession (after req.session is set)
