@@ -331,3 +331,37 @@ docker ps
     - Switch:
 
       kubectl config use-context minikube
+
+  # Create secret on Digital Ocean cluster
+
+    - Get cluster config 
+      doctl kubernetes cluster kubeconfig save <cluster name>
+      doctl kubernetes cluster kubeconfig save ticketing
+
+    - Get cluster context name
+      kubectl config view      
+
+        - Check if already on DO context (current-context)
+
+        - IF NOT:
+        - Switch to DO context:
+          kubectl config use-context <do-context-name>
+          kubectl config use-context do-sgp1-ticketing
+
+    - Create secret
+
+      kubectl create secret generic <secret-name> --from-literal=<KEY:VALUE>
+      kubectl create secret generic jwt-secret --from-literal=JWT_KEY=fdfegmdfkeokegldasdegeg343ge3
+      kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<stripe-secret-key-from-api-dashboard>
+
+  # Setup ingress-nginx on DO cluster
+
+    -go to : https://kubernetes.github.io/ingress-nginx/
+    
+    -check the Digital Ocean deployment command:
+      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.43.0/deploy/static/provider/do/deploy.yaml
+
+    
+
+
+
